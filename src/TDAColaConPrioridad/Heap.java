@@ -10,7 +10,7 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 	protected Entrada<K,V> [] elems;
 	protected Comparator<K> comp;
 	protected int size;
-	private final float factor = 0.8f;
+	private final float factor = 0.7f;
 	
 	/**
 	 * Constructor que cuenta con un limite de entradas.
@@ -21,6 +21,10 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 		this.elems = (Entrada<K,V>[]) new Entrada[maxElems];
 		this.comp = comp;
 		this.size = 0;
+	}
+	
+	public Heap(Comparator<K> comp) {
+		this(20, comp);
 	}
 	
 	/**
@@ -49,6 +53,7 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 		} else {
 			return this.elems[1];
 		}
+		
 	}
 	
 	/**
@@ -58,6 +63,8 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 	 * @return entrada insertada en la cola.
 	 */
 	public Entry<K,V> insert(K key, V value) throws InvalidKeyException {
+		this.checkKey(key);
+		
 		Entrada<K,V> entrada = new Entrada<K,V>( key, value);
 		elems[++size] = entrada;
 		
@@ -80,7 +87,7 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 			}
 		}
 		
-		if( (i / this.elems.length) > this.factor ) {
+		if( this.size == (this.elems.length - 1) ) {
 			this.crecerArreglo();
 		}
 		
@@ -169,10 +176,15 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 	private void crecerArreglo() {
 		@SuppressWarnings("unchecked")
 		Entrada<K,V> [] tmp = (Entrada<K,V>[]) new Entrada[elems.length+10];
-		for( int i = 0; i < elems.length; i++ ) {
+		for( int i = 0; i < (this.size+1); i++ ) {
 			tmp[i] = elems[i];
 		}
 		this.elems = tmp;
 	}
 	
+	private void checkKey(K key) throws InvalidKeyException {
+		if(key == null) {
+			throw new InvalidKeyException("Clave invalida");
+		}
+	}
 }

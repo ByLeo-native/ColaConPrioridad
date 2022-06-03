@@ -23,6 +23,10 @@ public class MaxHeap <K,V> {
 		this.size = 0;
 	}
 	
+	public MaxHeap(Comparator<K> comp) {
+		this(11, comp);
+	}
+	
 	/**
 	 * Devuelve la cantidad de entradas almacenadas.
 	 * @return cantidad de entradas.
@@ -80,7 +84,7 @@ public class MaxHeap <K,V> {
 			}
 		}
 		
-		if( (i / this.elems.length) > this.factor ) {
+		if( this.size == this.elems.length ) {
 			this.crecerArreglo();
 		}
 		
@@ -169,7 +173,7 @@ public class MaxHeap <K,V> {
 	private void crecerArreglo() {
 		@SuppressWarnings("unchecked")
 		Entrada<K,V> [] tmp = (Entrada<K,V>[]) new Entrada[elems.length+10];
-		for( int i = 0; i < elems.length; i++ ) {
+		for( int i = 0; i < (this.size +1); i++ ) {
 			tmp[i] = elems[i];
 		}
 		this.elems = tmp;
