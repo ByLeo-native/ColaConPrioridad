@@ -12,21 +12,37 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 	protected int size;
 	private final float factor = 0.8f;
 	
-	
+	/**
+	 * Constructor que cuenta con un limite de entradas.
+	 * @param maxElems Cantidad maxima de entradas que dispondra la cola.
+	 * @param comp Comparador que se utilizara para comparar entre las claves de las entradas.
+	 */
 	public Heap(int maxElems, Comparator<K> comp) {
 		this.elems = (Entrada<K,V>[]) new Entrada[maxElems];
 		this.comp = comp;
 		this.size = 0;
 	}
 	
+	/**
+	 * Devuelve la cantidad de entradas almacenadas.
+	 * @return cantidad de entradas.
+	 */
 	public int size() {
 		return this.size;
 	}
 	
+	/**
+	 * Consulta si la cola esta vacia.
+	 * @return Verdadero si no hay elementos almacenados y falso en caso contrario.
+	 */
 	public boolean isEmpty() {
 		return this.size == 0;
 	}
 	
+	/**
+	 * Devuelve la entrada con menor prioridad.
+	 * @return entrada con la clave de menor prioridad de la cola.
+	 */
 	public Entry<K,V> min() throws EmptyPriorityQueueException {
 		if( this.isEmpty() ) {
 			throw new EmptyPriorityQueueException("La cola está vacía.");
@@ -35,6 +51,12 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 		}
 	}
 	
+	/**
+	 * Inserta una entrada en la cola y la devuelve.
+	 * @param k Clave de la entrada a insertar.
+	 * @param value Valor de la entrada a insertar.
+	 * @return entrada insertada en la cola.
+	 */
 	public Entry<K,V> insert(K key, V value) throws InvalidKeyException {
 		Entrada<K,V> entrada = new Entrada<K,V>( key, value);
 		elems[++size] = entrada;
@@ -65,6 +87,11 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 		return entrada;
 	}
 	
+	/**
+	 * Remueve y devuelve la entrada con menor prioridad.
+	 * @return entrada de menor prioridad.
+	 * @exception EmptyPriorityQueueException si la cola esta vacía.
+	 */
 	public Entry<K,V> removeMin() throws EmptyPriorityQueueException {
 		Entry<K,V> entrada = this.min();
 		
@@ -120,6 +147,10 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 		return entrada;
 	}
 	
+	/**
+	 * Transcribe las entradas almacenadas en un formato de arreglo.
+	 * @return cadena de texto con las entradas almacenadas en forma de preOrden.
+	 */
 	public String toString() {
 		String texto = "[ ";
 		for( int i = 1; i <= size; i++) {
@@ -132,6 +163,9 @@ public class Heap <K,V> implements PriorityQueue<K,V> {
 		return texto;
 	}
 	
+	/**
+	 * Incrementa el tamaño del arreglo de entradas.
+	 */
 	private void crecerArreglo() {
 		@SuppressWarnings("unchecked")
 		Entrada<K,V> [] tmp = (Entrada<K,V>[]) new Entrada[elems.length+10];

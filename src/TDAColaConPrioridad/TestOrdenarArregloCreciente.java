@@ -20,6 +20,9 @@ public class TestOrdenarArregloCreciente {
 		a[cant++] = 0;
 		a[cant++] = 7;
 		a[cant++] = 8;
+		
+		System.out.println("Arreglo sin ordenar:");
+		//Escribo el arreglo con el formato de arreglos
 		String texto = "[ ";
 		for( int i = 0; i < cant; i++) {
 			if( i != cant-1) {
@@ -29,22 +32,29 @@ public class TestOrdenarArregloCreciente {
 			}
 		}
 		System.out.println(texto);
-		PriorityQueue<Integer,Integer> cola = new Heap<Integer,Integer>(20, comp);
+		System.out.println();
 		
+		PriorityQueue<Integer,Integer> cola = new Heap<Integer,Integer>(20, comp);
+		//Inserto cada elemento del arreglo al la cola con prioridad minima
 		for(int i = 0; i < cant; i++) {
 			try {
 				cola.insert(a[i], a[i]);
 			} catch (InvalidKeyException e) {e.printStackTrace();}
 		}
-		System.out.println("Tamaño de la cola: "+cola.size());
 		
-		System.out.println("Size: "+cant);
+		//Datos de la cola
+		System.out.println("Tamaño de la cola: "+cola.size());
+		System.out.println();
+	
+		//Actualizo los valores del arreglo con un orden creciente
 		for(int i = 0; i < cant; i++) {
 			try {
 				a[i] = cola.removeMin().getValue();
 			} catch (EmptyPriorityQueueException e) {e.printStackTrace();}
 		}
 		
+		System.out.println("Arreglo luego de utilizar la cola:");
+		//Escribo el arreglo con el formato de arreglos
 		texto = "[ ";
 		for( int i = 0; i < cant; i++) {
 			if( i != cant-1) {
